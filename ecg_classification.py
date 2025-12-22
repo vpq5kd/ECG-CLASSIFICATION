@@ -2,9 +2,6 @@ import pandas as pd
 import numpy as np
 import wfdb
 import ast
-import torch
-from sklearn import svm
-from sklearn.preprocessing import MultiLabelBinarizer
 
 #processing code based on "example_physionet.py" from the dataset
 
@@ -55,6 +52,10 @@ Y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
 
 
 #encode the data for pytorch to accept
+import torch
+from sklearn import svm
+from sklearn.preprocessing import MultiLabelBinarizer
+
 Y_train = Y_train.to_numpy()
 Y_test = Y_test.to_numpy()
 
@@ -62,6 +63,10 @@ mlb = MultiLabelBinarizer()
 
 Y_train_encoded = torch.from_numpy(mlb.fit_transform(Y_train))
 Y_test_encoded = torch.from_numpy(mlb.transform(Y_test))
+
+#define a Neural Network
+import torch.nn as nn
+import torch.nn.functional as F
 
 
 
