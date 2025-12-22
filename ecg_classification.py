@@ -87,7 +87,7 @@ trainloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, num_
 #define neural network
 import torch.nn as nn
 
-input_dim = train_data.__len__()
+input_dim = X_train.shape[1] * X_train.shape[2]
 hidden_layers = 32
 output_dim = 5
 
@@ -97,13 +97,35 @@ class classifier_network(nn.Module):
         self.linear1 = nn.Linear(input_dim, hidden_layers)
         self.linear2 = nn.Linear(hidden_layers, output_dim)
     def forward(self, x):
+        x = x.flatten(start_dim=1)
         x = torch.sigmoid(self.linear1(x))
         x = self.linear2(x)
         return x
 
 clf = classifier_network()
-input_test, output_test = train_data[0]
-print(input_test)
-print(output_test)
-print(classifier_network(input_test))
+
+#train neural network
+criterion = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.SGD(clf.parameters(), lr=0.1)
+
+epochs = 2
+for epoch in range(epochs):
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        inputs, classes = data
+        optimizer.zero_grad()
+        outputs = clf(inputs)
+        loss = criterion(outputs, classes.float())
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item()
+
+x, y = test_data[100]
+x = x.unsqueeze(0)
+
+prediction = clf(x)
+print(torch.sigmoid(prediction))
+print(y)
+print(mlb.inverse_transform(y.unsqueeze(0).numpy()))
+
 
