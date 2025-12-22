@@ -108,7 +108,7 @@ clf = classifier_network()
 criterion = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.SGD(clf.parameters(), lr=0.1)
 
-epochs = 2
+epochs = 10
 for epoch in range(epochs):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
@@ -119,7 +119,7 @@ for epoch in range(epochs):
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
-
+    print(f"epoch: {epoch+1}, loss: {running_loss}")
 x, y = test_data[100]
 x = x.unsqueeze(0)
 
