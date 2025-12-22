@@ -43,11 +43,11 @@ Y['diagnostic_superclass'] = Y.scp_codes.apply(aggregate_diagnostic)
 
 test_fold = 10
 
-X_train = torch.from_numpy(X[np.where(Y.strat_fold != test_fold)])
+X_train = X[np.where(Y.strat_fold != test_fold)]
 Y_train = Y[(Y.strat_fold != test_fold)].diagnostic_superclass
 
 
-X_test = torch.from_numpy(X[np.where(Y.strat_fold == test_fold)])
+X_test = X[np.where(Y.strat_fold == test_fold)]
 Y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
 
 
@@ -61,13 +61,49 @@ Y_test = Y_test.to_numpy()
 
 mlb = MultiLabelBinarizer()
 
-Y_train_encoded = torch.from_numpy(mlb.fit_transform(Y_train))
-Y_test_encoded = torch.from_numpy(mlb.transform(Y_test))
+Y_train_encoded = mlb.fit_transform(Y_train)
+Y_test_encoded = mlb.transform(Y_test)
 
-#define a Neural Network
+#define a data set
+from torch.utils.data import Dataset, DataLoader
+
+class Data(Dataset):
+    def __init__(self, X_data, Y_data):
+        self.X = torch.from_numpy(X_data.astype(np.float32))
+        self.Y = torch.from_numpy(Y_data).type(torch.LongTensor)
+        self.len = self.X.shape[0]
+    def __getitem__(self, index):
+        return self.X[index], self.Y[index]
+    def __len__(self):
+        return self.len
+
+train_data = Data(X_train, Y_train_encoded)
+test_data = Data(X_test, Y_test_encoded)
+
+#load data with a dataloader
+batch_size = 32
+trainloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, num_workers=2)
+
+#define neural network
 import torch.nn as nn
-import torch.nn.functional as F
 
+input_dim = train_data.__len__()
+hidden_layers = 32
+output_dim = 5
 
+class classifier_network(nn.Module):
+    def __init__(self):
+        super(classifier_network, self).__init__()
+        self.linear1 = nn.Linear(input_dim, hidden_layers)
+        self.linear2 = nn.Linear(hidden_layers, output_dim)
+    def forward(self, x):
+        x = torch.sigmoid(self.linear1(x))
+        x = self.linear2(x)
+        return x
 
+clf = classifier_network()
+input_test, output_test = train_data[0]
+print(input_test)
+print(output_test)
+print(classifier_network(input_test))
 
