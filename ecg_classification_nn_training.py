@@ -22,6 +22,7 @@ Y.scp_codes = Y.scp_codes.apply(lambda x: ast.literal_eval(x))
 try:
     print("attempting to load presaved np array")
     X = np.load("lowresolution_ecg_nparray.npy")
+    print("presaved np array loaded successfully")
 except OSError:
     print("np array load failed or does not exist, proceeding with hard load")
     X = load_raw_data(Y, sampling_rate, path)
@@ -121,9 +122,9 @@ clf = classifier_network()
 
 #train neural network
 criterion = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.SGD(clf.parameters(), lr=0.1)
+optimizer = torch.optim.Adam(clf.parameters(), lr=0.001)
 
-epochs = 3
+epochs = 30
 for epoch in range(epochs):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
@@ -135,11 +136,10 @@ for epoch in range(epochs):
         optimizer.step()
         running_loss += loss.item()
     print(f"epoch: {epoch+1}, loss: {running_loss}")
-x, y = test_data[100]
+print("model trained successfully")
 
-prediction = clf(x)
-print(torch.sigmoid(prediction))
-print(y)
-print(mlb.inverse_transform(y.unsqueeze(0).numpy()))
+#save the neural network
+PATH = './ecg_classification_nn.pth'
+torch.save(clf.state_dict(), PATH)
 
-
+print("model saved successfully.")
