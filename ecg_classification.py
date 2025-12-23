@@ -87,19 +87,34 @@ trainloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, num_
 #define neural network
 import torch.nn as nn
 
-input_dim = X_train.shape[1] * X_train.shape[2]
+input_dim = X_train.shape[1]
 hidden_layers = 32
 output_dim = 5
 
 class classifier_network(nn.Module):
     def __init__(self):
         super(classifier_network, self).__init__()
-        self.linear1 = nn.Linear(input_dim, hidden_layers)
-        self.linear2 = nn.Linear(hidden_layers, output_dim)
+        self.conv1 = nn.Conv1d(in_channels = input_dim , out_channels=8, kernel_size =3, padding = 1)
+        self.conv2 = nn.Conv1d(in_channels = 8, out_channels = 16, kernel_size = 3, padding = 1)
+        self.conv3 = nn.Conv1d(in_channels = 16, out_channels = 32, kernel_size = 3, padding = 1)
+        self.conv4 = nn.Conv1d(in_channels = 32, out_channels = 64, kernel_size = 3, padding = 1)
+        self.conv5 = nn.Conv1d(in_channels = 64, out_channels = 128, kernel_size = 3, padding = 1)
+        
+        self.pool = nn.AdaptiveAvgPool1d(1)
+        
+        self.LReLU = nn.LeakyReLU()
+        self.fc = nn.Linear(128, 5)
+
     def forward(self, x):
-        x = x.flatten(start_dim=1)
-        x = torch.sigmoid(self.linear1(x))
-        x = self.linear2(x)
+        x = self.LReLU(self.conv1(x))
+        x = self.LReLU(self.conv2(x))
+        x = self.LReLU(self.conv3(x))
+        x = self.LReLU(self.conv4(x))
+        x = self.LReLU(self.conv5(x))
+        x = self.pool(x)
+        x = x.squeeze(-1)
+        x = self.fc(x)
+
         return x
 
 clf = classifier_network()
@@ -108,7 +123,7 @@ clf = classifier_network()
 criterion = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.SGD(clf.parameters(), lr=0.1)
 
-epochs = 10
+epochs = 3
 for epoch in range(epochs):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
@@ -121,7 +136,6 @@ for epoch in range(epochs):
         running_loss += loss.item()
     print(f"epoch: {epoch+1}, loss: {running_loss}")
 x, y = test_data[100]
-x = x.unsqueeze(0)
 
 prediction = clf(x)
 print(torch.sigmoid(prediction))
