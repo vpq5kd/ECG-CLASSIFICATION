@@ -86,7 +86,7 @@ test_data = Data(X_test, Y_test_encoded)
 #load data with a dataloader
 batch_size = 32
 trainloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, num_workers=2)
-
+testloader = DataLoader(test_data, batch_size = batch_size, shuffle=True, num_workers=2)
 #define neural network
 import torch.nn as nn
 
@@ -123,25 +123,28 @@ class classifier_network(nn.Module):
 clf = classifier_network()
 
 #train neural network
-criterion = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(clf.parameters(), lr=0.001)
+def main(): 
+    criterion = nn.BCEWithLogitsLoss()
+    optimizer = torch.optim.Adam(clf.parameters(), lr=0.001)
 
-epochs = 30
-for epoch in range(epochs):
-    running_loss = 0.0
-    for i, data in enumerate(trainloader, 0):
-        inputs, classes = data
-        optimizer.zero_grad()
-        outputs = clf(inputs)
-        loss = criterion(outputs, classes.float())
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
-    print(f"epoch: {epoch+1}, loss: {running_loss}")
-print("model trained successfully")
+    epochs = 30
+    for epoch in range(epochs):
+        running_loss = 0.0
+        for i, data in enumerate(trainloader, 0):
+            inputs, classes = data
+            optimizer.zero_grad()
+            outputs = clf(inputs)
+            loss = criterion(outputs, classes.float())
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
+        print(f"epoch: {epoch+1}, loss: {running_loss}")
+    print("model trained successfully")
 
-#save the neural network
-PATH = './ecg_classification_nn.pth'
-torch.save(clf.state_dict(), PATH)
+    #save the neural network
+    PATH = './ecg_classification_nn.pth'
+    torch.save(clf.state_dict(), PATH)
 
-print("model saved successfully.")
+    print("model saved successfully.")
+if __name__ == "__main__":
+    main()
