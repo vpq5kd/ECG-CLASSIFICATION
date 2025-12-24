@@ -104,9 +104,9 @@ class classifier_network(nn.Module):
         self.conv5 = nn.Conv1d(in_channels = 64, out_channels = 128, kernel_size = 3, padding = 1)
         
         self.pool = nn.AdaptiveAvgPool1d(1)
-        
+        self.flatten = nn.Flatten() 
         self.LReLU = nn.LeakyReLU()
-        self.fc = nn.Linear(128, 5)
+        self.fc = nn.Linear(1536, 5)
 
     def forward(self, x):
         x = self.LReLU(self.conv1(x))
@@ -114,8 +114,7 @@ class classifier_network(nn.Module):
         x = self.LReLU(self.conv3(x))
         x = self.LReLU(self.conv4(x))
         x = self.LReLU(self.conv5(x))
-        x = self.pool(x)
-        x = x.squeeze(-1)
+        x = self.flatten(x)
         x = self.fc(x)
 
         return x
