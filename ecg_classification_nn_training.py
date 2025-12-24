@@ -91,15 +91,17 @@ import torch.nn as nn
 input_dim = X_train.shape[1]
 hidden_layers = 32
 output_dim = 5
+kernel_size = 3
+padding = 1
 
 class classifier_network(nn.Module):
     def __init__(self):
         super(classifier_network, self).__init__()
-        self.conv1 = nn.Conv1d(in_channels = input_dim , out_channels=8, kernel_size =3, padding = 1)
-        self.conv2 = nn.Conv1d(in_channels = 8, out_channels = 16, kernel_size = 3, padding = 1)
-        self.conv3 = nn.Conv1d(in_channels = 16, out_channels = 32, kernel_size = 3, padding = 1)
-        self.conv4 = nn.Conv1d(in_channels = 32, out_channels = 64, kernel_size = 3, padding = 1)
-        self.conv5 = nn.Conv1d(in_channels = 64, out_channels = 128, kernel_size = 3, padding = 1)
+        self.conv1 = nn.Conv1d(in_channels = input_dim , out_channels=8, kernel_size = kernel_size, padding = padding)
+        self.conv2 = nn.Conv1d(in_channels = 8, out_channels = 16, kernel_size = kernel_size, padding = padding)
+        self.conv3 = nn.Conv1d(in_channels = 16, out_channels = 32, kernel_size = kernel_size, padding = padding)
+        self.conv4 = nn.Conv1d(in_channels = 32, out_channels = 64, kernel_size = kernel_size, padding = padding)
+        self.conv5 = nn.Conv1d(in_channels = 64, out_channels = 128, kernel_size = kernel_size, padding = padding)
         
         self.pool = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten() 
@@ -124,7 +126,7 @@ def main():
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(clf.parameters(), lr=0.001)
 
-    epochs = 30
+    epochs = 50
     for epoch in range(epochs):
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):

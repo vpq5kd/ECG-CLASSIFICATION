@@ -24,7 +24,7 @@ with torch.no_grad():
         outputs = clf(inputs)
         sigmoid = nn.Sigmoid()
         probabilities = sigmoid(outputs)
-        predictions = (probabilities > 0.1).int()
+        predictions = (probabilities > 0.9).int()
         
         all_predictions.append(predictions)
         all_labels.append(labels)
