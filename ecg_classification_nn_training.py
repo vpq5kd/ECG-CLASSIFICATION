@@ -54,7 +54,6 @@ Y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
 
 #encode the data for pytorch to accept
 import torch
-import joblib
 from sklearn import svm
 from sklearn.preprocessing import MultiLabelBinarizer
 
@@ -66,7 +65,6 @@ mlb = MultiLabelBinarizer()
 Y_train_encoded = mlb.fit_transform(Y_train)
 Y_test_encoded = mlb.transform(Y_test)
 
-joblib.dump(mlb, "ecg_classfication_encoder.joblib")
 #define a data set
 from torch.utils.data import Dataset, DataLoader
 
