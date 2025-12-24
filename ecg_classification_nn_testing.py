@@ -23,7 +23,8 @@ with torch.no_grad():
     for inputs, labels in testloader:
         outputs = clf(inputs)
         sigmoid = nn.Sigmoid()
-        probabilities = sigmoid(outputs)
+        softmax = nn.Softmax(dim = 1)
+        probabilities = softmax(outputs)
         predictions = (probabilities > 0.9).int()
         
         all_predictions.append(predictions)

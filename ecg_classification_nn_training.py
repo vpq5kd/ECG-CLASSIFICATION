@@ -106,6 +106,8 @@ class classifier_network(nn.Module):
         self.pool = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten() 
         self.LReLU = nn.LeakyReLU()
+        self.softmax = nn.Softmax()
+
         self.fc = nn.Linear(1536, 5)
 
     def forward(self, x):
