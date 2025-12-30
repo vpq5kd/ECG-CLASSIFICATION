@@ -19,7 +19,7 @@ TN = sum(mcm[k,0,0] for k in range(num_classes))
 FN = sum(mcm[k,1,0] for k in range(num_classes))
 FP = sum(mcm[k,0,1] for k in range(num_classes))
 
-fig, ax = plt.subplots(1,5, figsize =(15,3))
+fig, ax = plt.subplots(1,5, figsize =(15,5))
 vmax = mcm.max()
 global_accuracy = 100*(TP+TN)/(TP+TN+FN+FP)
 for i, cm in enumerate(mcm):
@@ -32,7 +32,7 @@ for i, cm in enumerate(mcm):
     sns.heatmap(cm, ax=ax[i], vmin=0, vmax=vmax,cbar=False, square=True,  annot=True, fmt="d",cmap = "OrRd", xticklabels=xlabels, yticklabels=ylabels)
     ax[i].set_title(f"{classes[i]}")
 
-fig.suptitle(f"Confusion Matrices for ECG Classification with a CNN\n"f"Global Accuracy: {global_accuracy}", horizontalalignment = 'center', fontsize=10, y=0.78, x = 0.45)
+fig.suptitle(f"Confusion Matrices for ECG Classification with a CNN\n"f"Global Accuracy: {global_accuracy}", horizontalalignment = 'center', fontsize=10)
 fig.colorbar(ax[0].collections[0], shrink = 0.5,ax=ax, location ="right")
 
 plt.savefig("confusion_matrix_plot.png")
