@@ -12,7 +12,7 @@ Automated ECG classification is a widely used tool in a variety of clinical envi
 
 ### CNN Design
 
-CNN design is a highly complicated process that relies on large amounts of _a posteriori_ knowledge to create effective results. For the first iteration of CNN design for this project, which is the one currently displayed, I decided to go with architecture specifically built for the PTB-XL dataset outlined by three researches from the UTP University of Science and Technology in Poland [^1]. These researches designed a 5 layer convulotional neural network with one flattening layer and one fully-connected layer, and achieved similar results to my implementation of their research. Given that this is a relatively simplisitic CNN design, it's accuracy provides promising insight into the utility of CNN classification as methodology for clinical use. 
+CNN design is a highly complicated process that relies on large amounts of _a posteriori_ knowledge to create effective results. For the first iteration of CNN design for this project, which is the one currently displayed, I decided to go with architecture specifically built for the PTB-XL dataset outlined by three researches from the UTP University of Science and Technology in Poland [^1]. These researchers designed a 5 layer convulotional neural network with one flattening layer and one fully-connected layer, and achieved similar results to my implementation of their research. Given that this is a relatively simplisitic CNN design, it's accuracy provides promising insight into the utility of CNN classification as methodology for clinical use. 
 
 ### Dataset Choice
 
@@ -28,7 +28,7 @@ This code is split into the three files `*_training.py`, `*_testing.py`, and `*_
 
 ## Results
 
-Using the CNN from the researches at UTP University, I achieved a global accuracy of around 75%, far to low to consider using this technique at scale or using it to replace discrete ECG classification in clinical practice. That being said, this metric does show _promising_ results for this technique in general, and perhaps with further design iterations a higher global accuracy could be achieved. Further, in the pre-hospital enviornment, which is the target envionrment for a later end product (as defined in the next section) ECG classification only needs to determine whether or not an ECG indicates myocordial infarcation. This need points to a possible reduction of the data to a binary model of whether or not an ECG is an MI, which reduces the complexity of the CNN and could give more accuracate results.
+Using the CNN from the researches at UTP University, I achieved a global accuracy of around 75%, far too low to consider using this technique at scale or using it to replace discrete ECG classification in clinical practice. That being said, this metric does show _promising_ results for this technique in general, and perhaps with further design iterations a higher global accuracy could be achieved. Further, in the pre-hospital enviornment, which is the target envionrment for a later end product (as defined in the next section) ECG classification only needs to determine whether or not an ECG indicates myocordial infarcation. This need points to a possible reduction of the data to a binary model of whether or not an ECG is an MI, which reduces the complexity of the CNN and could give more accuracate results.
 
 -----
 
