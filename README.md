@@ -1,6 +1,6 @@
 # Classification of ECG Diagnoses with a Convulotional Neural Network.
 <img width="1500" height="500" alt="image" src="https://github.com/user-attachments/assets/d70b688a-87ac-4b87-8b2f-9d54fdb0bc31" />
-<figcaption>A confusion matrix of the CNN's results for the 5 different 'diagnostic superclasses' outlined by PTB-XL</figcaption>
+<figcaption>A confusion matrix of the CNN's results for the 5 different 'diagnostic superclasses' outlined by PTB-XL.</figcaption>
 
 ## Problem
 
