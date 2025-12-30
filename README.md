@@ -22,7 +22,7 @@ Since my original imeptus for this project was to use human cardiologist validat
 
 ## Making, Using, and Replicating my Code
 
-This code is split into the three files `*_training.py`, `*_testing.py`, and `*_results.py` with some skeleton code taken from various resources[^4][^5]. To build the neural network, ensuring of course that you have the appropriate dependecies installed along with the dataset downloaded, run the `*_training.py` file. This will save the neural network which can later be used by `*_results.py` (and by extension `*_testing.py`) when you run `*_results.py` to see the results of the CNN. `*_testing.py` is a seperate file intended to make the code cleaner and does not need to be run independently to create or use the neural network. 
+This code is split into the three files `*_training.py`, `*_testing.py`, and `*_results.py` with some skeleton code taken from various resources[^4][^5]. To build the neural network, ensuring of course that you have the appropriate dependecies installed along with the dataset downloaded, run the `*_training.py` file. This will save the neural network in the file `ecg_classification_nn.pth` which can later be used by `*_results.py` (and by extension `*_testing.py`) when you run `*_results.py` to see the results of the CNN. Of course, `ecg_classification_nn.pth` could also be used in devices that need to classify ECGs in real-time. `*_testing.py` is a seperate file intended to make the code cleaner and does not need to be run independently to create or use the neural network. 
 
 -----
 
