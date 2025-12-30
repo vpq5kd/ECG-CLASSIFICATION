@@ -26,16 +26,16 @@ for i, cm in enumerate(mcm):
     ylabels = ["",""]
     xlabels = ["",""]
     if (i==0):
-        ylables = ["Actually Negative", "Actually Positive"]
+        ylabels = ["Actually Negative", "Actually Positive"]
         xlabels = ["Predicted Negative", "Predicted Positive"]
 
-    sns.heatmap(cm, ax=ax[i], vmin=0, vmax=vmax,cbar=False, square=True,  annot=True, fmt="d", cmap="Blues", xticklabels=xlabels, yticklabels=ylabels)
+    sns.heatmap(cm, ax=ax[i], vmin=0, vmax=vmax,cbar=False, square=True,  annot=True, fmt="d",cmap = "OrRd", xticklabels=xlabels, yticklabels=ylabels)
     ax[i].set_title(f"{classes[i]}")
 
-plt.title(f"Confusion Matrices for ECG Classification with a CNN\n"f"Global Accuracy: {global_accuracy}\n", horizontalalignment = 'center', fontsize=10)
-plt.tight_layout()
+fig.suptitle(f"Confusion Matrices for ECG Classification with a CNN\n"f"Global Accuracy: {global_accuracy}", horizontalalignment = 'center', fontsize=10, y=0.78, x = 0.45)
 fig.colorbar(ax[0].collections[0], shrink = 0.5,ax=ax, location ="right")
 
+plt.savefig("confusion_matrix_plot.png")
 plt.show()
 print(f"global accuracy: {100*(TP+TN)/(TP+TN+FN+FP)}%")
 
