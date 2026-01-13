@@ -28,7 +28,7 @@ This code is split into the three files `*_training.py`, `*_testing.py`, and `*_
 
 ## Results
 
-Using the CNN from the researches at UTP University, I achieved a global accuracy of around 75%, far too low to consider using this technique at scale or using it to replace discrete ECG classification in clinical practice. That being said, this metric does show _promising_ results for this technique in general, and perhaps with further design iterations a higher global accuracy could be achieved. Further, in the pre-hospital enviornment, which is the target envionrment for a later end product (as defined in the next section) ECG classification only needs to determine whether or not an ECG indicates myocordial infarcation. This need points to a possible reduction of the data to a binary model of whether or not an ECG is an MI, which reduces the complexity of the CNN and could give more accuracate results.
+Using the CNN from the researches at UTP University, I achieved a global accuracy of around 75%, far too low to consider using this technique at scale or using it to replace discrete ECG classification in clinical practice with this specific architecture. That being said, this metric does show _promising_ results for this technique in general, and perhaps with further design iterations a higher global accuracy could be achieved. Further, in the pre-hospital enviornment, which is the target envionrment for a later end product (as defined in the next section) ECG classification only needs to determine whether or not an ECG indicates myocordial infarcation. This need points to a possible reduction of the data to a binary model of whether or not an ECG is an MI, which reduces the complexity of the CNN and could give more accuracate results.
 
 -----
 
